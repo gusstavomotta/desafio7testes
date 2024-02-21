@@ -8,10 +8,10 @@
     "authors": [
         {
             "name": "Gustavo Oliveira da Motta",
-            "email": "127642611+gusstavomotta@users.noreply.github.com"
+            "email": "gumotta2908@hotmail.com"
         }
     ],
     "require-dev": {
-        "phpunit/phpunit": "^11.0"
+        "phpunit/phpunit": "^10.5"
     }
 }

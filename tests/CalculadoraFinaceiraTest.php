@@ -13,28 +13,45 @@ class CalculadoraFinaceiraTest extends TestCase {
         $this->calculadoraFinanceira = new CalculadoraFinanceira;
     }
 
-    // public function testCalcularJurosSimples(){
-    //     $capital = 1000;
-    //     $taxa = 0.5;
-    //     $tempo = 2;
+    public function testCalcularJurosSimples(){
+        $capital = 1000;
+        $taxa = 10;
+        $tempo = 3;
 
-    //     $juros = $this->calculadoraFinanceira->calcularJurosSimples($capital, $taxa, $tempo);
-    //     $this->assertEquals(1100, $juros);
-    //     }
+        $juros = $this->calculadoraFinanceira->calcularJurosSimples($capital, $taxa, $tempo);
+        $this->assertEquals(300, $juros);
+    }
+
     public function testCalcularJurosCompostos(){
         $capital = 1000;
         $taxa = 10;
         $tempo = 3;
 
         $montante = $this->calculadoraFinanceira->calcularJurosCompostos($capital, $taxa, $tempo);
-        $this->assertEquals('1331,00', $montante);
+        $juros = ($montante - $capital);
+        $this->assertEquals(331, $juros);
     }
-    // public function testCalcularAmortizacao(){
-    //     $capital = 1000;
-    //     $taxa = 0.5;
-    //     $tempo = 2;
-    //     $tipo = 'sac';
-    //     $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo,$tipo);
 
-    // }
+    public function testCalcularAmortizacaoSac(){
+        $capital = 20000;
+        $taxa = 4;
+        $tempo = 8;
+        $tipo = 'sac';
+        $valor_pago = 0;
+
+        $valor_juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo,$tipo, $valor_pago);
+        $juros = ($valor_juros - $capital);
+        $this->assertEquals(3600.00,number_format($juros, 2, ".", ""));
+    }
+    public function testCalcularAmortizacaoPrice(){
+        $capital = 20000;
+        $taxa = 4;
+        $tempo = 8;
+        $tipo = 'price';
+        $valor_pago = 0;
+
+        $valor_juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo,$tipo, $valor_pago);
+        $juros = $valor_juros - $capital;
+        $this->assertEquals(3764.45, number_format($juros, 2, ".", ""));
+}
 }
