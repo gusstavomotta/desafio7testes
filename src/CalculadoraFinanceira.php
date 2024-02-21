@@ -10,7 +10,7 @@ class CalculadoraFinanceira{
         
     }
 
-    public function calcularJurosAmortizacao($capital, $taxa, $tempo,$tipo){
+    public function calcularAmortizacao($capital, $taxa, $tempo,$tipo){
 
     }
 }

@@ -1,0 +1,17 @@
+{
+    "name": "testes/testes",
+    "autoload": {
+        "psr-4": {
+            "Testes\\Testes\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gustavo Oliveira da Motta",
+            "email": "127642611+gusstavomotta@users.noreply.github.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    }
+}
