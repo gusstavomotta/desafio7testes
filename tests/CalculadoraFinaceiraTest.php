@@ -40,10 +40,11 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tempo = 8;
         $tipo = 'sac';
         $valor_juros = 0;
+        $parcelas = array();
 
-
-        $juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
-        $this->assertEquals(3600.00, number_format($juros, 2, ".", ""));
+        $dados = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros, $parcelas);
+        $this->assertEquals(3600.00, $dados['juros']);
+        $this->assertEquals(2500, $dados['parcelas'][0]);
     }
 
     public function testCalcularAmortizacaoPrice(){
@@ -53,9 +54,11 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tempo = 8;
         $tipo = 'price';
         $valor_juros = 0;
+        $parcelas = array();
 
-        $juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
-        $this->assertEquals(3764.45, number_format($juros, 2, ".", ""));
+        $dados = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros,$parcelas);
+        $this->assertEquals(3764.45, $dados['juros']);
+        $this->assertEquals(2500, number_format( array_sum($dados['parcelas'])/count($dados['parcelas']), 2, ".", ""));
     }
 
     public function testCalcularJurosSimplesValoresNegativos(){
@@ -85,9 +88,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tempo = 8;
         $tipo = 'sac';
         $valor_juros = 0;
+        $parcelas = array();
 
         $this->expectExceptionMessage("Os dados inseridos são inválidos, insira novamente!");
-        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
+        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros,$parcelas);
     }
 
     public function testCalcularAmortizacaoPriceComValoresNegativos(){
@@ -97,9 +101,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tempo = -8;
         $tipo = 'price';
         $valor_juros = 0;
+        $parcelas = array();
 
         $this->expectExceptionMessage("Os dados inseridos são inválidos, insira novamente!");
-        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
+        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros, $parcelas);
     }
 
     public function testCalcularAmortizacaoComTipoInvalido(){
@@ -109,9 +114,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tempo = 8;
         $tipo = 'assa';
         $valor_juros = 0;
+        $parcelas = array();
 
         $this->expectExceptionMessage("Tipo de amortização inválida, insira novamente!");
-        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
+        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros,$parcelas);
     }
 
     public function testCalcularJurosSimplesValoresExtremos(){
@@ -141,9 +147,12 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tempo = 1;
         $tipo = 'sac';
         $valor_juros = 0;
+        $parcelas = array();
 
-        $juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
-        $this->assertEquals(42.50, number_format($juros, 2, ".", ""));
+        $dados = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros,$parcelas);
+        $this->assertEquals(42.50, $dados['juros']);
+        $this->assertEquals(50, number_format( array_sum($dados['parcelas'])/count($dados['parcelas']), 2, ".", ""));
+
     }
 
     public function testCalcularAmortizacaoPriceValoresExtremos(){
@@ -153,8 +162,12 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tempo = 1;
         $tipo = 'price';
         $valor_juros = 0;
+        $parcelas = array();
 
-        $juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
-        $this->assertEquals(194.00, number_format($juros, 2, ".", ""));
+        $dados = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros,$parcelas);
+        $this->assertEquals(194.00, $dados['juros']);
+        $this->assertEquals(200, number_format( array_sum($dados['parcelas'])/count($dados['parcelas']), 2, ".", ""));
+
     }
 }
+    
