@@ -29,10 +29,7 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = 10;
         $tempo = 3;
 
-        $montante = $this->calculadoraFinanceira->calcularJurosCompostos($capital, $taxa, $tempo);
-        $juros = ($montante - $capital);
-
-        $this->assertEquals(1331, $montante);
+        $juros = $this->calculadoraFinanceira->calcularJurosCompostos($capital, $taxa, $tempo);
         $this->assertEquals(331, $juros);
     }
 
@@ -139,10 +136,7 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = 95;
         $tempo = 1;
 
-        $montante = $this->calculadoraFinanceira->calcularJurosCompostos($capital, $taxa, $tempo);
-        $juros = ($montante - $capital);
-
-        $this->assertEquals(19.50, $montante);
+        $juros = $this->calculadoraFinanceira->calcularJurosCompostos($capital, $taxa, $tempo);
         $this->assertEquals(9.50, $juros);
     }
 

@@ -19,13 +19,8 @@ class CalculadoraFinanceira
             throw new Exception ("Os dados inseridos são inválidos, insira novamente! ");
         }
 
-        if ($tempo == 0) {
-            return $capital;
-        }
-        
-        $capital = ($capital * ($taxa / 100 + 1));
-        $tempo--;
-        return $this->calcularJurosCompostos($capital, $taxa, $tempo);
+        $montante = $capital * (pow($taxa/100 + 1, $tempo));
+        return number_format($montante - $capital, 2 , ".", "");
     }
 
     public function calcularAmortizacao(float $emprestimo, float $taxa, int $tempo, String $tipo, float $montante_pago)
@@ -43,11 +38,11 @@ class CalculadoraFinanceira
 
         } elseif ($tipo == 'sac') {
 
-            $valor_prestacao = $emprestimo / $tempo;
+            $valor_amortizacao = $emprestimo / $tempo;
             $valor_juros = $emprestimo * $taxa / 100;
 
-            $montante_pago += $valor_prestacao + $valor_juros;
-            $emprestimo -= $valor_prestacao;
+            $montante_pago += $valor_amortizacao + $valor_juros;
+            $emprestimo -= $valor_amortizacao;
 
             $tempo--;
             return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $montante_pago);
@@ -77,5 +72,4 @@ class CalculadoraFinanceira
         }
         return true;
     }
-
 }
