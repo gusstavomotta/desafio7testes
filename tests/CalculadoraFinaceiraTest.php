@@ -1,9 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
-use function PHPUnit\Framework\assertEquals;
-
 require_once "src/CalculadoraFinanceira.php";
 
 class CalculadoraFinaceiraTest extends TestCase{
@@ -150,6 +147,7 @@ class CalculadoraFinaceiraTest extends TestCase{
         $parcelas = array();
 
         $dados = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros,$parcelas);
+
         $this->assertEquals(42.50, $dados['juros']);
         $this->assertEquals(50, number_format( array_sum($dados['parcelas'])/count($dados['parcelas']), 2, ".", ""));
 
