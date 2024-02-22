@@ -20,7 +20,7 @@ class CalculadoraFinanceira
         }
 
         if ($tempo == 0) {
-            return number_format($capital,2,".", "");
+            return $capital;
         }
         
         $capital = ($capital * ($taxa / 100 + 1));
@@ -28,14 +28,14 @@ class CalculadoraFinanceira
         return $this->calcularJurosCompostos($capital, $taxa, $tempo);
     }
 
-    public function calcularAmortizacao(float $emprestimo, float $taxa, int $tempo, String $tipo, float $valor_pago)
+    public function calcularAmortizacao(float $emprestimo, float $taxa, int $tempo, String $tipo, float $montante_pago)
     {
-        if($this->validar_dados([$emprestimo, $taxa, $tempo, $valor_pago]) == false){
+        if($this->validar_dados([$emprestimo, $taxa, $tempo, $montante_pago]) == false){
             throw new Exception ("Os dados inseridos são inválidos, insira novamente!");
         }
 
         if ($tempo == 0) {
-            return number_format($valor_pago, 2, ".", "");
+            return number_format($montante_pago, 2, ".", "");
         }
 
         if (!in_array($tipo, $this->tipos_amortizacao)) {
@@ -46,22 +46,22 @@ class CalculadoraFinanceira
             $valor_prestacao = $emprestimo / $tempo;
             $valor_juros = $emprestimo * $taxa / 100;
 
-            $valor_pago += $valor_prestacao + $valor_juros;
+            $montante_pago += $valor_prestacao + $valor_juros;
             $emprestimo -= $valor_prestacao;
 
             $tempo--;
-            return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $valor_pago);
+            return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $montante_pago);
 
         } else {
 
             $valor_prestacao = $emprestimo * ($taxa / 100 * pow(1 + $taxa / 100, $tempo)) / (pow(1 + $taxa / 100, $tempo) - 1);
             $valor_juros = $emprestimo * $taxa / 100;
 
-            $valor_pago += $valor_prestacao;
+            $montante_pago += $valor_prestacao;
             $emprestimo -= ($valor_prestacao - $valor_juros);
 
             $tempo--;
-            return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $valor_pago);
+            return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $montante_pago);
         }
     }
     public function validar_dados(array $array_dados){
