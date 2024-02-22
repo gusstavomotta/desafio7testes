@@ -23,14 +23,14 @@ class CalculadoraFinanceira
         return number_format($montante - $capital, 2 , ".", "");
     }
 
-    public function calcularAmortizacao(float $emprestimo, float $taxa, int $tempo, String $tipo, float $montante_pago)
+    public function calcularAmortizacao(float $emprestimo, float $taxa, int $tempo, String $tipo, float $juros_totais)
     {
-        if($this->validar_dados([$emprestimo, $taxa, $tempo, $montante_pago]) == false){
+        if($this->validar_dados([$emprestimo, $taxa, $tempo, $juros_totais]) == false){
             throw new Exception ("Os dados inseridos são inválidos, insira novamente!");
         }
 
         if ($tempo == 0) {
-            return number_format($montante_pago, 2, ".", "");
+            return number_format($juros_totais, 2, ".", "");
         }
 
         if (!in_array($tipo, $this->tipos_amortizacao)) {
@@ -40,23 +40,23 @@ class CalculadoraFinanceira
 
             $valor_amortizacao = $emprestimo / $tempo;
             $valor_juros = $emprestimo * $taxa / 100;
+            $juros_totais += $valor_juros;
 
-            $montante_pago += $valor_amortizacao + $valor_juros;
             $emprestimo -= $valor_amortizacao;
-
             $tempo--;
-            return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $montante_pago);
+
+            return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $juros_totais);
 
         } else {
 
             $valor_prestacao = $emprestimo * ($taxa / 100 * pow(1 + $taxa / 100, $tempo)) / (pow(1 + $taxa / 100, $tempo) - 1);
             $valor_juros = $emprestimo * $taxa / 100;
+            $juros_totais += $valor_juros;
 
-            $montante_pago += $valor_prestacao;
             $emprestimo -= ($valor_prestacao - $valor_juros);
-
             $tempo--;
-            return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $montante_pago);
+            
+            return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $juros_totais);
         }
     }
     public function validar_dados(array $array_dados){

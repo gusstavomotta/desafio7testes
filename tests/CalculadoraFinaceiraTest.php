@@ -39,13 +39,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = 4;
         $tempo = 8;
         $tipo = 'sac';
-        $montante = 0;
+        $valor_juros = 0;
 
 
-        $montante = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $montante);
-        $juros = ($montante - $capital);
-
-        $this->assertEquals(23600, $montante);
+        $juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
         $this->assertEquals(3600.00, number_format($juros, 2, ".", ""));
     }
 
@@ -55,12 +52,9 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = 4;
         $tempo = 8;
         $tipo = 'price';
-        $montante = 0;
+        $valor_juros = 0;
 
-        $montante = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $montante);
-        $juros = ($montante - $capital);
-
-        $this->assertEquals(23764.45, $montante);
+        $juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
         $this->assertEquals(3764.45, number_format($juros, 2, ".", ""));
     }
 
@@ -90,10 +84,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = 4;
         $tempo = 8;
         $tipo = 'sac';
-        $montante = 0;
+        $valor_juros = 0;
 
         $this->expectExceptionMessage("Os dados inseridos são inválidos, insira novamente!");
-        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $montante);
+        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
     }
 
     public function testCalcularAmortizacaoPriceComValoresNegativos(){
@@ -102,10 +96,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = -4;
         $tempo = -8;
         $tipo = 'price';
-        $montante = 0;
+        $valor_juros = 0;
 
         $this->expectExceptionMessage("Os dados inseridos são inválidos, insira novamente!");
-        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $montante);
+        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
     }
 
     public function testCalcularAmortizacaoComTipoInvalido(){
@@ -114,10 +108,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = 4;
         $tempo = 8;
         $tipo = 'assa';
-        $montante = 0;
+        $valor_juros = 0;
 
         $this->expectExceptionMessage("Tipo de amortização inválida, insira novamente!");
-        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $montante);
+        $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
     }
 
     public function testCalcularJurosSimplesValoresExtremos(){
@@ -146,12 +140,9 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = 85;
         $tempo = 1;
         $tipo = 'sac';
-        $montante = 0;
+        $valor_juros = 0;
 
-        $montante = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $montante);
-        $juros = ($montante - $capital);
-
-        $this->assertEquals(92.50, $montante);
+        $juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
         $this->assertEquals(42.50, number_format($juros, 2, ".", ""));
     }
 
@@ -161,12 +152,9 @@ class CalculadoraFinaceiraTest extends TestCase{
         $taxa = 97;
         $tempo = 1;
         $tipo = 'price';
-        $montante = 0;
+        $valor_juros = 0;
 
-        $montante = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $montante);
-        $juros = ($montante - $capital);
-
-        $this->assertEquals(394, $montante);
+        $juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_juros);
         $this->assertEquals(194.00, number_format($juros, 2, ".", ""));
     }
 }
