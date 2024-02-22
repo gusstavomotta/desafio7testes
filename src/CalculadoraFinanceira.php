@@ -10,7 +10,7 @@ class CalculadoraFinanceira
             throw new Exception ("Os dados inseridos são inválidos, insira novamente! ");
         }
 
-        return $capital * $taxa / 100  * $tempo;
+        return ($capital * ($taxa / 100)  * $tempo);
     }
 
     public function calcularJurosCompostos(float $capital, float $taxa, int $tempo)
@@ -20,7 +20,7 @@ class CalculadoraFinanceira
         }
 
         $montante = $capital * (pow($taxa/100 + 1, $tempo));
-        return number_format($montante - $capital, 2 , ".", "");
+        return number_format(($montante - $capital), 2 , ".", "");
     }
 
     public function calcularAmortizacao(float $emprestimo, float $taxa, int $tempo, String $tipo, float $juros_totais, array $parcelas)
@@ -40,11 +40,11 @@ class CalculadoraFinanceira
 
             $valor_amortizacao = $emprestimo / $tempo;
             $valor_juros = $emprestimo * $taxa / 100;
-
             $juros_totais += $valor_juros;
+            
             $parcelas[] = $valor_amortizacao;
-
             $emprestimo -= $valor_amortizacao;
+            
             $tempo--;
 
             return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $juros_totais,$parcelas);
@@ -53,11 +53,11 @@ class CalculadoraFinanceira
 
             $valor_prestacao = $emprestimo * ($taxa / 100 * pow(1 + $taxa / 100, $tempo)) / (pow(1 + $taxa / 100, $tempo) - 1);
             $valor_juros = $emprestimo * $taxa / 100;
-
             $juros_totais += $valor_juros;
+        
             $parcelas[]= ($valor_prestacao - $valor_juros);
-            
             $emprestimo -= ($valor_prestacao - $valor_juros);
+           
             $tempo--;
 
             return $this->calcularAmortizacao($emprestimo, $taxa, $tempo, $tipo, $juros_totais,$parcelas);
