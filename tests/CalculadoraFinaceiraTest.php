@@ -2,7 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 
-use function PHPSTORM_META\expectedArguments;
 use function PHPUnit\Framework\assertEquals;
 
 require_once "src/CalculadoraFinanceira.php";
@@ -32,6 +31,8 @@ class CalculadoraFinaceiraTest extends TestCase{
 
         $montante = $this->calculadoraFinanceira->calcularJurosCompostos($capital, $taxa, $tempo);
         $juros = ($montante - $capital);
+
+        $this->assertEquals(1331, $montante);
         $this->assertEquals(331, $juros);
     }
 
@@ -44,8 +45,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $valor_pago = 0;
 
 
-        $valor_juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_pago);
-        $juros = ($valor_juros - $capital);
+        $montante = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_pago);
+        $juros = ($montante - $capital);
+
+        $this->assertEquals(23600, $montante);
         $this->assertEquals(3600.00, number_format($juros, 2, ".", ""));
     }
 
@@ -57,8 +60,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tipo = 'price';
         $valor_pago = 0;
 
-        $valor_juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_pago);
-        $juros = $valor_juros - $capital;
+        $montante = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_pago);
+        $juros = ($montante - $capital);
+
+        $this->assertEquals(23764.45, $montante);
         $this->assertEquals(3764.45, number_format($juros, 2, ".", ""));
     }
 
@@ -136,6 +141,8 @@ class CalculadoraFinaceiraTest extends TestCase{
 
         $montante = $this->calculadoraFinanceira->calcularJurosCompostos($capital, $taxa, $tempo);
         $juros = ($montante - $capital);
+
+        $this->assertEquals(19.50, $montante);
         $this->assertEquals(9.50, $juros);
     }
 
@@ -147,9 +154,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tipo = 'sac';
         $valor_pago = 0;
 
+        $montante = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_pago);
+        $juros = ($montante - $capital);
 
-        $valor_juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_pago);
-        $juros = ($valor_juros - $capital);
+        $this->assertEquals(92.50, $montante);
         $this->assertEquals(42.50, number_format($juros, 2, ".", ""));
     }
 
@@ -161,8 +169,10 @@ class CalculadoraFinaceiraTest extends TestCase{
         $tipo = 'price';
         $valor_pago = 0;
 
-        $valor_juros = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_pago);
-        $juros = $valor_juros - $capital;
+        $montante = $this->calculadoraFinanceira->calcularAmortizacao($capital, $taxa, $tempo, $tipo, $valor_pago);
+        $juros = ($montante - $capital);
+
+        $this->assertEquals(394, $montante);
         $this->assertEquals(194.00, number_format($juros, 2, ".", ""));
     }
 }

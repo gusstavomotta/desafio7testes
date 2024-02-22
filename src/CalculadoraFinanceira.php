@@ -20,7 +20,7 @@ class CalculadoraFinanceira
         }
 
         if ($tempo == 0) {
-            return $capital;
+            return number_format($capital,2,".", "");
         }
         
         $capital = ($capital * ($taxa / 100 + 1));
@@ -35,7 +35,7 @@ class CalculadoraFinanceira
         }
 
         if ($tempo == 0) {
-            return $valor_pago;
+            return number_format($valor_pago, 2, ".", "");
         }
 
         if (!in_array($tipo, $this->tipos_amortizacao)) {
